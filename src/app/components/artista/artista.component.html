@@ -1,0 +1,60 @@
+<div class="container main-container animated fadeIn fast" *ngIf="artista">
+  <div class="row">
+    <div class="col-md-3 text-center">
+      <img [src]=" artista.images | sinfoto " class="img-thumbnail img-circle ">
+      <br>
+    </div>
+
+    <div class="col-md-9 text-center">
+      <h3> {{ artista.name }} <small> Popularidad {{ artista.popularity }}</small> </h3>
+      <hr>
+      <br>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 ">
+            <button
+              [routerLink]= "['/buscar']"
+              type="button" name="button" class="btn btn-outline-secondary">Regresar a busqueda</button>
+          </div>
+          <div class="col-md-3 ">
+            <a [href]=" artista.id | domseguro:'https://open.spotify.com/artist/' "
+               class="btn btn-outline-secondary" >Ir al sitio en spotify</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="top-30" *ngIf="pistas">
+  <h3> Top tracks de {{ artista.name }} </h3>
+  <hr>
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-inverse table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Foto</th>
+            <th>Cancion</th>
+            <th>Popularidad</th>
+            <th>Preview</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pista of pistas; let i=index">
+            <th>{{ i+1 }}</th>
+            <th><img [src]="pista.album?.images | sinfoto" class="img-fluid img-circle img-50"></th>
+            <th>{{ pista.name }}</th>
+            <th>{{ pista.popularity }}%</th>
+            <th>
+              <!-- <audio controls>
+                <source [src]=" pista.preview_url " >
+              </audio> -->
+              <iframe [src]=" pista.uri | domseguro:'https://open.spotify.com/embed?uri=' " width="300" height="80" frameborder="0" allowtransparency="true"></iframe>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
